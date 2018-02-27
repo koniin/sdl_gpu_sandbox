@@ -64,6 +64,7 @@ int main(int argc, char * argv[])
 		return -1;
 	}
 
+	SDL_ShowCursor(SDL_DISABLE);
 	setWindowTitle(screen, "TITLE");
 	setWindowPosition(screen, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 
@@ -76,12 +77,42 @@ int main(int argc, char * argv[])
 	Uint8 done;
 	SDL_Event event;
 	done = 0;
+
+	unsigned mousex = 0;
+	unsigned mousey = 0;
+
 	while (!done)
 	{
 		while (SDL_PollEvent(&event))
 		{
 			if (event.type == SDL_QUIT)
 				done = 1;
+			/* If a button on the mouse is pressed. */
+			if (event.type == SDL_MOUSEBUTTONDOWN)
+			{
+				/* If the left button was pressed. */
+				if (event.button.button == SDL_BUTTON_LEFT)
+					/* Quit the application */
+					printf(" \n%d %d", event.button.x, event.button.y);
+					//done = 1;
+			}
+			if (event.type == SDL_MOUSEMOTION)
+			{
+				mousex = event.motion.x;
+				mousey = event.motion.y;
+				///* If the mouse is moving to the left */
+				//if (event.motion.xrel < 0)
+				//	SDL_FillRect(screen, NULL, SDL_MapRGB(fmt, 255, 0, 0));
+				///* If the mouse is moving to the right */
+				//else if (event.motion.xrel > 0)
+				//	SDL_FillRect(screen, NULL, SDL_MapRGB(fmt, 0, 255, 0));
+				///* If the mouse is moving up */
+				//else if (event.motion.yrel < 0)
+				//	SDL_FillRect(screen, NULL, SDL_MapRGB(fmt, 0, 0, 255));
+				///* If the mouse is moving down */
+				//else if (event.motion.yrel > 0)
+				//	SDL_FillRect(screen, NULL, SDL_MapRGB(fmt, 0, 255, 255));
+			}
 			else if (event.type == SDL_KEYDOWN)
 			{
 				if (event.key.keysym.sym == SDLK_ESCAPE)
@@ -122,6 +153,8 @@ int main(int argc, char * argv[])
 		GPU_Target* target = renderTargetImage->target;
 
 		GPU_ClearColor(target, clearColor);
+
+		GPU_Circle(target, mousex, mousey, 3, circleColor);
 
 		GPU_Circle(target, gw / 2, gh / 2, 20, circleColor);
 
