@@ -78,8 +78,8 @@ int main(int argc, char * argv[])
 	SDL_Event event;
 	done = 0;
 
-	unsigned mousex = 0;
-	unsigned mousey = 0;
+	int mousex = 0;
+	int mousey = 0;
 
 	while (!done)
 	{
@@ -98,8 +98,9 @@ int main(int argc, char * argv[])
 			}
 			if (event.type == SDL_MOUSEMOTION)
 			{
-				mousex = event.motion.x;
-				mousey = event.motion.y;
+				// can use this to get where the cursor is going but better use get mousestate to get cursor pos?
+				//mousex = event.motion.x;
+				//mousey = event.motion.y;
 				///* If the mouse is moving to the left */
 				//if (event.motion.xrel < 0)
 				//	SDL_FillRect(screen, NULL, SDL_MapRGB(fmt, 255, 0, 0));
@@ -154,6 +155,7 @@ int main(int argc, char * argv[])
 
 		GPU_ClearColor(target, clearColor);
 
+		SDL_GetMouseState(&mousex, &mousey);
 		GPU_Circle(target, mousex, mousey, 3, circleColor);
 
 		GPU_Circle(target, gw / 2, gh / 2, 20, circleColor);
