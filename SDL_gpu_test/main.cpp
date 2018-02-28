@@ -50,6 +50,8 @@ int main(int argc, char * argv[])
 {
 	Maze* maze = generateMaze(10, 10);
 	printMaze(maze);
+	growTree(maze);
+	printMaze(maze);
 	freeMaze(maze);
 
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {

@@ -1,6 +1,9 @@
 #ifndef _MAZE_H
 #define _MAZE_H
 
+#include <vector>
+#include <random>
+
 enum Directions {
 	North = 1,
 	South = 2,
@@ -38,6 +41,36 @@ Maze* generateMaze(int cols, int rows) {
 	m->cols = cols;
 	m->rows = rows;
 	return m;
+}
+
+std::random_device seed;
+std::mt19937 rng(seed());
+
+struct Point {
+	int x;
+	int y;
+	Point(int xPos, int yPos) {
+		x = xPos;
+		y = yPos;
+	}
+};
+
+Point randomPoint(int max) {
+	std::uniform_int_distribution<int> gen(0, max);
+	Point p(gen(rng), gen(rng));
+	return p;
+}
+
+std::vector<Cell> cellsToVisit;
+void growTree(Maze* maze) {
+	cellsToVisit.clear();
+
+	//Point start = randomPoint(
+	
+	// var start = RNG.PointInRectangle(Bounds);
+	// cells[start.Y, start.X].IsOpen = true;
+	maze->buffer[maze->index(1, 0)].IsLeftWallOpen = true;
+	// cellsToVisit.Add(start);
 }
 
 void printMaze(Maze* maze) {
