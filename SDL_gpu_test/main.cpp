@@ -1,6 +1,7 @@
 #include <iostream>
 #include "SDL.h"
 #include "SDL_gpu.h"
+#include "Maze.h"
 
 using namespace std;
 
@@ -47,6 +48,10 @@ void setWindowScale(float s) {
 
 int main(int argc, char * argv[])
 {
+	Maze* maze = generateMaze(10, 10);
+	printMaze(maze);
+	freeMaze(maze);
+
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
 		cout << "SDL initialization failed. SDL Error: " << SDL_GetError();
 	}
